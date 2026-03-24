@@ -1,0 +1,458 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Syne:wght@500;700;800&display=swap");
+
+:root {
+  --film-progress: 0;
+  --beam-x: -18vw;
+  --beam-y: 28vh;
+  --beam-opacity: 0.12;
+  --beam-scale: 1;
+  --beam-angle: 10deg;
+  --video-pan: 50%;
+  --video-zoom: 1.04;
+  --veil-opacity: 0.26;
+  --orb-scale: 1;
+  --accent-a: #8fd7ff;
+  --accent-b: #7b5cff;
+}
+
+body {
+  margin: 0;
+  background: #020304;
+  color: #f4f0ea;
+  font-family: "Manrope", sans-serif;
+}
+
+.cinema-app {
+  position: relative;
+}
+
+.film-stage {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  background: #040608;
+}
+
+.film-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: var(--video-pan) 50%;
+  filter:
+    saturate(calc(1.08 + var(--film-progress) * 0.26))
+    contrast(calc(1 + var(--film-progress) * 0.14))
+    brightness(calc(0.58 + var(--film-progress) * 0.14))
+    hue-rotate(calc(var(--film-progress) * -6deg));
+  transform: scale(var(--video-zoom));
+}
+
+.film-tint,
+.film-vignette,
+.film-aurora,
+.film-orb,
+.film-beam,
+.film-edge {
+  position: absolute;
+  pointer-events: none;
+}
+
+.film-tint {
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(5, 8, 14, 0.64) 0%, rgba(4, 7, 12, 0.18) 36%, rgba(7, 5, 12, 0.74) 100%);
+}
+
+.film-vignette {
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(0, 0, 0, 0) 28%, rgba(0, 0, 0, 0.76) 100%);
+}
+
+.film-aurora {
+  inset: -12%;
+  opacity: calc(var(--veil-opacity) + 0.06);
+  background:
+    radial-gradient(circle at 18% 32%, color-mix(in srgb, var(--accent-a) 20%, transparent), transparent 26%),
+    radial-gradient(circle at 78% 24%, color-mix(in srgb, var(--accent-b) 18%, transparent), transparent 24%),
+    linear-gradient(115deg, transparent 0%, color-mix(in srgb, var(--accent-a) 10%, transparent) 38%, transparent 55%, color-mix(in srgb, var(--accent-b) 9%, transparent) 76%, transparent 100%);
+  filter: blur(44px);
+  transform: scale(calc(1 + var(--film-progress) * 0.06));
+}
+
+.film-orb {
+  top: 14vh;
+  left: 10vw;
+  width: 42vw;
+  height: 42vw;
+  max-width: 580px;
+  max-height: 580px;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 34% 34%, rgba(255,255,255,0.28), color-mix(in srgb, var(--accent-a) 22%, transparent) 28%, color-mix(in srgb, var(--accent-b) 18%, transparent) 52%, rgba(0,0,0,0) 74%);
+  filter: blur(18px);
+  transform: translateY(calc(var(--film-progress) * -10vh)) scale(var(--orb-scale));
+  opacity: 0.82;
+}
+
+.film-beam {
+  top: var(--beam-y);
+  left: var(--beam-x);
+  width: 34vw;
+  height: 36vh;
+  opacity: var(--beam-opacity);
+  background:
+    linear-gradient(90deg, rgba(255,255,255,0), rgba(255,244,220,0.95), color-mix(in srgb, var(--accent-a) 50%, white), rgba(255,255,255,0));
+  filter: blur(22px);
+  transform: rotate(var(--beam-angle)) scaleX(var(--beam-scale));
+  transform-origin: center;
+}
+
+.film-edge {
+  left: 0;
+  width: 100%;
+  height: 20vh;
+  background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0));
+  opacity: 0.24;
+}
+
+.film-edge-top {
+  top: 0;
+}
+
+.film-edge-bottom {
+  bottom: 0;
+  transform: rotate(180deg);
+}
+
+.scroll-film {
+  position: relative;
+  z-index: 3;
+}
+
+.hero-section {
+  min-height: 100vh;
+  padding: 4rem clamp(1rem, 4vw, 4rem);
+  display: flex;
+  align-items: center;
+}
+
+.hero-frame {
+  width: min(56rem, 100%);
+}
+
+.eyebrow {
+  margin: 0 0 1rem;
+  font-size: 0.76rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(255, 226, 171, 0.9);
+}
+
+h1,
+h2 {
+  margin: 0;
+  font-family: "Syne", sans-serif;
+  line-height: 0.96;
+  letter-spacing: -0.04em;
+}
+
+h1 {
+  max-width: none;
+  font-size: clamp(4rem, 14vw, 10rem);
+  letter-spacing: -0.08em;
+}
+
+h2 {
+  max-width: 9ch;
+  font-size: clamp(1.5rem, 3.2vw, 2.6rem);
+}
+
+.hero-copy,
+.panel-body {
+  max-width: 35rem;
+  margin-top: 1.35rem;
+  font-size: clamp(1rem, 1.4vw, 1.12rem);
+  line-height: 1.8;
+  color: rgba(244, 240, 234, 0.8);
+}
+
+.hero-copy {
+  max-width: 28rem;
+  font-size: clamp(0.95rem, 1.15vw, 1.02rem);
+}
+
+h3 {
+  margin: 0;
+  font-family: "Syne", sans-serif;
+  font-size: clamp(1.2rem, 2vw, 1.6rem);
+  line-height: 1.05;
+}
+
+.skills-banner-section,
+.internships-section {
+  position: relative;
+  z-index: 3;
+  padding: 0 clamp(1rem, 4vw, 4rem);
+}
+
+.skills-banner-shell,
+.internships-header {
+  width: min(56rem, 100%);
+}
+
+.skills-banner-section {
+  min-height: 46vh;
+  display: flex;
+  align-items: center;
+}
+
+.skills-marquee {
+  display: grid;
+  gap: 1rem;
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
+}
+
+.skills-marquee-track {
+  display: flex;
+  width: max-content;
+  gap: 0.9rem;
+  will-change: transform;
+}
+
+.skills-marquee-track-secondary {
+  margin-left: -10rem;
+}
+
+.skills-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.9rem 1.15rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--accent-a) 24%, rgba(255,255,255,0.14));
+  background: rgba(8, 10, 14, 0.18);
+  backdrop-filter: blur(14px);
+  color: rgba(245, 241, 235, 0.9);
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.internships-section {
+  padding-top: 4rem;
+  padding-bottom: 3rem;
+}
+
+.internships-grid {
+  margin-top: 2rem;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.internship-card {
+  min-height: 360px;
+}
+
+.internship-date {
+  margin: 0.65rem 0 0;
+  color: rgba(245, 241, 235, 0.62);
+  font-size: 0.9rem;
+}
+
+.portfolio-sections {
+  position: relative;
+}
+
+.portfolio-section {
+  min-height: 110vh;
+  padding: 0 clamp(1rem, 4vw, 4rem);
+  margin-top: -8vh;
+}
+
+.section-sticky {
+  position: sticky;
+  top: 12vh;
+  min-height: 76vh;
+  display: grid;
+  align-items: center;
+}
+
+.portfolio-left .section-sticky {
+  justify-items: start;
+}
+
+.portfolio-right .section-sticky {
+  justify-items: end;
+}
+
+.portfolio-panel {
+  --panel-ray: -145%;
+  --panel-glint: 0;
+  position: relative;
+  width: min(35rem, 100%);
+  padding: clamp(1.45rem, 3vw, 2.2rem);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(8, 10, 14, 0.14);
+  backdrop-filter: blur(14px);
+  box-shadow:
+    0 24px 70px rgba(0, 0, 0, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+  border-radius: 26px;
+  transition:
+    border-color 260ms ease,
+    box-shadow 260ms ease,
+    background 260ms ease,
+    transform 420ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 320ms ease;
+}
+
+.portfolio-panel::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(
+    102deg,
+    rgba(255,255,255,0) 0%,
+    rgba(255, 244, 214, 0.12) 42%,
+    color-mix(in srgb, var(--accent-a) 50%, white) 50%,
+    rgba(255,255,255,0) 58%
+  );
+  transform: translateX(var(--panel-ray));
+  filter: blur(12px);
+  opacity: calc(var(--panel-glint) * 0.9);
+  pointer-events: none;
+}
+
+.portfolio-panel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 18% 0%, rgba(255,255,255,0.1), transparent 30%),
+    linear-gradient(165deg, color-mix(in srgb, var(--accent-a) 10%, transparent), transparent 42%, color-mix(in srgb, var(--accent-b) 10%, transparent));
+  opacity: calc(var(--panel-glint) * 0.18);
+  pointer-events: none;
+}
+
+.portfolio-panel.is-lit {
+  border-color: color-mix(in srgb, var(--accent-a) 40%, rgba(255, 229, 177, 0.44));
+  background: rgba(9, 12, 18, 0.2);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--accent-a) 16%, rgba(255, 232, 186, 0.14)),
+    0 24px 70px rgba(0, 0, 0, 0.3),
+    0 0 34px color-mix(in srgb, var(--accent-a) 18%, rgba(255, 214, 143, 0.16));
+  transform: translateY(-4px) rotate(-0.35deg);
+}
+
+.panel-number {
+  margin-bottom: 1rem;
+  font-size: clamp(2.8rem, 7vw, 5rem);
+  line-height: 0.88;
+  font-weight: 800;
+  color: rgba(255, 239, 214, 0.14);
+}
+
+.panel-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin-top: 1.3rem;
+}
+
+.panel-meta span {
+  padding: 0.6rem 0.82rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--accent-a) 22%, rgba(255,255,255,0.12));
+  background: color-mix(in srgb, var(--accent-a) 8%, rgba(8, 10, 14, 0.2));
+  color: rgba(245, 241, 235, 0.84);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.panel-fill-lines {
+  display: grid;
+  gap: 0.7rem;
+  margin-top: 1.5rem;
+}
+
+.panel-fill-lines span {
+  display: block;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.2), rgba(255,255,255,0.04));
+}
+
+.panel-fill-lines span:nth-child(1) { width: 88%; }
+.panel-fill-lines span:nth-child(2) { width: 72%; }
+.panel-fill-lines span:nth-child(3) { width: 54%; }
+
+.portfolio-left .portfolio-panel:hover {
+  transform: translateY(-6px) rotate(-0.55deg);
+}
+
+.portfolio-right .portfolio-panel:hover {
+  transform: translateY(-6px) rotate(0.55deg);
+}
+
+.portfolio-panel:hover .panel-meta span {
+  border-color: color-mix(in srgb, var(--accent-a) 30%, rgba(255,255,255,0.18));
+  background: color-mix(in srgb, var(--accent-a) 12%, rgba(8, 10, 14, 0.26));
+}
+
+@media (max-width: 720px) {
+  .hero-section {
+    padding: 5rem 1rem 3rem;
+  }
+
+  .portfolio-section {
+    min-height: 104vh;
+    padding: 0 1rem;
+    margin-top: -4vh;
+  }
+
+  .skills-banner-section,
+  .internships-section {
+    padding: 0 1rem;
+  }
+
+  .internships-section {
+    padding-top: 3rem;
+  }
+
+  .internships-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .section-sticky {
+    top: 8vh;
+    min-height: 82vh;
+  }
+
+  .portfolio-left .section-sticky,
+  .portfolio-right .section-sticky {
+    justify-items: start;
+  }
+
+  h1 {
+    font-size: clamp(3rem, 16vw, 5.2rem);
+  }
+
+  h2 {
+    font-size: clamp(1.5rem, 8vw, 2.2rem);
+  }
+
+  .film-orb {
+    width: 70vw;
+    height: 70vw;
+    left: 4vw;
+    top: 22vh;
+  }
+
+  .film-beam {
+    width: 54vw;
+  }
+}
