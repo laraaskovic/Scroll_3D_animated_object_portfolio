@@ -4,8 +4,9 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const VIDEO_SRC = "/media/neon-glow-night-drive.mp4";
-const VIDEO_POSTER = "/media/neon-glow-night-drive.jpg";
+const MEDIA_BASE = `${import.meta.env.BASE_URL}media/`;
+const VIDEO_SRC = `${MEDIA_BASE}neon-glow-night-drive.mp4`;
+const VIDEO_POSTER = `${MEDIA_BASE}neon-glow-night-drive.jpg`;
 
 const storySections = [
   {
@@ -54,8 +55,8 @@ const internships = [
     role: "Software Engineering Intern",
     date: "May 2025 - August 2025",
     detail:
-      "Raised automated coverage from ~0.5% to 87.5% across 50+ services, reduced deployment time by 7%, and helped resolve 20+ critical payment API vulnerabilities.",
-    tags: ["JUnit + Mockito", "Payments APIs", "Reliability"],
+      "Raised coverage from ~0.5% to 87.5% across 50+ services, reduced deployment time, and helped resolve 20+ payment API vulnerabilities.",
+    tags: ["JUnit", "Payments APIs", "Backend"],
   },
   {
     company: "North P&D Inc.",
@@ -64,6 +65,23 @@ const internships = [
     detail:
       "Integrated Stripe, built a FastAPI microservice with sub-120 ms latency, and implemented a RAG pipeline using FAISS retrieval over internal documents.",
     tags: ["FastAPI", "Stripe", "RAG + FAISS"],
+  },
+];
+
+const projectLinks = [
+  {
+    title: "Epistemic Failure Detection",
+    href: "https://github.com/laraaskovic/quantized_pruning_CNN_FPGA/blob/main/Epistemic_Pruning_Detection_Auditor_Model.pdf",
+    summary:
+      "Independent research paper on quantized and pruned CNN deployment with an auditor model for epistemic failure detection.",
+    tags: ["Paper", "PyTorch", "FPGA"],
+  },
+  {
+    title: "City-Scale GIS Engine",
+    href: "https://github.com/laraaskovic",
+    summary:
+      "C++ mapping engine with route optimization, interactive rendering, and spatial indexing for large OpenStreetMap datasets.",
+    tags: ["C++", "GIS", "OpenStreetMap"],
   },
 ];
 
@@ -345,7 +363,7 @@ export default function App() {
             </p>
             <h2 data-reveal>Internships</h2>
             <p className="panel-body" data-reveal>
-              The past roles are grouped below as clearer blocks, with scope and results easier to scan.
+              The following roles account for a total of 16 months of internship experience.
             </p>
           </div>
 
@@ -362,6 +380,39 @@ export default function App() {
                   ))}
                 </div>
               </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="projects-links-section">
+          <div className="internships-header">
+            <p className="eyebrow" data-reveal>
+              My Projects
+            </p>
+            <h2 data-reveal>Projects</h2>
+            <p className="panel-body" data-reveal>
+              All projects can be found on my github!
+            </p>
+          </div>
+
+          <div className="internships-grid project-links-grid">
+            {projectLinks.map((project) => (
+              <a
+                key={project.title}
+                className="portfolio-panel internship-card project-link-card"
+                href={project.href}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <p className="eyebrow" data-reveal>Project</p>
+                <h3 data-reveal>{project.title}</h3>
+                <p className="panel-body" data-reveal>{project.summary}</p>
+                <div className="panel-meta" data-reveal>
+                  {project.tags.map((tag) => (
+                    <span key={tag}>{tag}</span>
+                  ))}
+                </div>
+              </a>
             ))}
           </div>
         </section>
